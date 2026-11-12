@@ -2,89 +2,86 @@
 
 Deep research agents that help M&A analysts gather company information, conduct due diligence, perform valuation analyses, evaluate offers and deal terms, and compare alternatives to inform negotiation strategies from both the acquirer and target company perspectives.
 
-## Two independent agents
+## Agents
 
-| Agent | Agent ID | Content and runtime |
+| Agent | Agent ID | Directory |
 |---|---|---|
 | Acquirer-Side Acquisition Analysis Agent | `acquirer-acquisition-analysis` | [agents/acquirer](agents/acquirer/README.md) |
 | Target-Side Acquisition Offer Analysis Agent | `target-acquisition-analysis` | [agents/target](agents/target/README.md) |
 
-Each agent has independent inputs, question list, prompt, report specification, and command. Shared code handles validation, provider transport, and output saving; there is no perspective-switch field.
+Each agent has its own inputs, question list, prompt, report specification, and entry point. Common runtime code is in `acquisition_runtime/`.
 
-## Status
+## Installation
 
-The local runtime and offline checks are implemented. Live research calls, model availability, financial research quality, Word-based PDF conversion, and ATL registration are not yet verified. The nine research stages remain instructions to the research provider, not a separately implemented execution graph or certification system.
-
-## Requirements
-
-Python 3.12 or later. Run all commands from the repository root.
+Python 3.12 or later. Run commands from the repository root.
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-# Optional document export dependencies:
+# Optional document exports:
 python -m pip install -r requirements-export.txt
 ```
 
-Dry runs and core offline tests need only the Python standard library. DOCX export needs python-docx. PDF export needs docx2pdf and Microsoft Word on a supported machine; its failure does not invalidate Markdown/evidence outputs.
+DOCX requires python-docx. PDF additionally requires docx2pdf and Microsoft Word. Failed optional exports preserve the report and evidence.
 
-## Preview without a research call
+## Configuration
+
+Set credentials in the environment, or enter the API key privately when prompted.
+
+| Variable | Purpose |
+|---|---|
+| `OPENAI_API_KEY` | Research-service API key |
+| `OPENAI_BASE_URL` | Optional CommonStack-compatible service URL |
+| `RESEARCH_MODEL` | Required gateway model; optional native-model override |
+
+`.env.example` lists the variables; .env files are not loaded automatically. Keep real keys out of source files and task settings.
+
+Each agent's `runtime/config.yaml` contains JSON-compatible YAML. Preserve that syntax when editing. Native OpenAI uses background polling; the gateway path expects synchronous completion. The native default is `o4-mini-deep-research`; configure a model and tools supported by your service. Code Interpreter is disabled by default.
+
+## Run
 
 ```powershell
-python -m agents.acquirer.runtime.main --settings agents/acquirer/examples/hypothetical.json --dry-run
-python -m agents.target.runtime.main --settings agents/target/examples/hypothetical.json --dry-run
+python -m agents.acquirer.runtime.main
+python -m agents.target.runtime.main
 ```
 
-The bundled examples are hypothetical inputs only. Preview output contains validated settings, a prepared prompt, and a run record with status `prepared`. It does not contain a research report or simulated evidence.
-
-## Real research configuration
-
-Use your own task settings and a service credential configured through your shell or secure deployment system. OPENAI_API_KEY may be omitted to enter it privately at the prompt. Do not put keys in task settings, code, screenshots, or Git commits. `.env.example` documents variable names; .env files are not loaded automatically.
-
-- `OPENAI_API_KEY`: research-service API key.
-- `OPENAI_BASE_URL`: optional ATL-supplied CommonStack OpenAI-compatible base URL. When set, synchronous gateway completion and `web_search` are used.
-- `RESEARCH_MODEL`: required for a gateway; optional native-model override. Use a model supported by your service. Native config retains `o4-mini-deep-research` from the earlier agents; availability is not verified here.
-
-Native OpenAI uses background Responses polling and the configured search tool. The runtime requests source metadata and preserves citations returned by the service. Unsupported tool/model combinations fail visibly; the code does not silently remove research tools and label the result equivalent.
-
-Code Interpreter is off by default. A developer may enable `enable_code_interpreter` in the relevant agent's JSON-compatible `runtime/config.yaml` only when supported by the selected endpoint/model. Requesting a tool is not proof of its use. Inspect returned execution evidence. This version does not implement a standalone valuation calculator or XBRL checker.
-
-The service timeout is configurable, as is the polling interval. On a polling wait-limit failure the runtime attempts cancellation; remote cancellation/billing cessation cannot be guaranteed. Interrupting a client likewise may leave a remote job running. No automatic retries create duplicate paid requests.
-
-## Run independently
+Each command collects the corresponding agent's inputs. To read settings from a JSON file:
 
 ```powershell
 python -m agents.acquirer.runtime.main --settings path/to/acquirer-settings.json
 python -m agents.target.runtime.main --settings path/to/target-settings.json
 ```
 
-Omit `--settings` to answer the corresponding agent's questions interactively. `--no-docx` skips DOCX; `--pdf` attempts PDF; `--output` selects a local output root.
+Use `--dry-run` to validate inputs and save the assembled prompt without an API request. Configuration examples:
 
-All nine answers enter the corresponding research prompt. Missing optional answers retain explicit defaults; a missing valuation date uses the research cut-off date. Required fields, ISO dates, unknown keys, and template/schema mismatches are checked before research.
+```powershell
+python -m agents.acquirer.runtime.main --settings agents/acquirer/examples/hypothetical.json --dry-run
+python -m agents.target.runtime.main --settings agents/target/examples/hypothetical.json --dry-run
+```
+
+Other options: `--output` selects an output root, `--no-docx` skips DOCX, and `--pdf` attempts PDF export.
+
+All nine question-list answers enter the research prompt. Missing optional answers retain their defaults; an omitted valuation date uses the research cut-off date. Listed documents are not automatically uploaded.
 
 ## Outputs
 
-Each run receives a unique directory under `output/<agent-id>/<run-id>/`:
+Each run saves under `output/<agent-id>/<run-id>/`:
 
-- `settings.json`: validated task inputs, without runtime credentials.
-- `run.json`: agent ID, status, timestamps, prompt hash, returned model/usage, cost when actually returned, artifacts, and warnings.
-- `report.md`: research-provider report, preserved without inventing references.
-- `evidence.json`: returned citations, sources, and execution metadata; missing evidence remains missing.
+- `settings.json`: validated inputs.
+- `run.json`: status, timestamps, model, returned usage/cost, artifacts, and warnings.
+- `report.md`: research report.
+- `evidence.json`: returned citations, sources, and tool metadata.
 - `report.docx` and `report.pdf`: optional exports.
 
-Core report or evidence-save failures mark the run failed. Optional export failures preserve core outputs and add warnings. Missing structured citations/sources also produce warnings. Output and preview directories are ignored by Git and may contain sensitive client inputs; handle them accordingly.
+A dry run saves `prepared_prompt.md` instead of a report. Output directories are excluded from Git. Core output failures mark a run failed; export failures and missing structured evidence produce warnings.
 
-## Checks
+## Tests and status
 
 ```powershell
 python -m unittest discover -s tests -v
 ```
 
-Checks use fake transports, not paid model calls. The DOCX check runs when its optional dependency is installed. See [validation scope](docs/runtime-validation.md).
+The 17 local checks passed using simulated research services; the DOCX check requires its optional dependency. Live API compatibility, research quality, Word-based PDF conversion, and ATL deployment remain unverified.
 
-## Next integration step
-
-Register both IDs separately with atl-research-service, map each schema to its own ATL form, and adapt the existing run/result endpoints to these entry points. This repository does not yet change or deploy that service.
-
-For technical handoff, start with [ATL 上架交接说明](docs/ATL-HANDOFF.md). The delivery target is source and integration handoff; no financial case study is required before transfer. Deployment connectivity and platform checks remain with the integrating team.
+The nine-stage workflows are research instructions to the provider. This version does not implement a separate workflow graph or XBRL verification service. On a wait-limit failure the runtime attempts cancellation; a remote task may continue after timeout or interruption.

@@ -1,35 +1,37 @@
 # Acquirer-Side Acquisition Analysis Agent
 
-This agent has its own ID, question list, input schema, research prompt, report specification, and execution entry point. It does not switch perspectives.
+Supports the acquirer's management and board in assessing standalone value, synergies, financing, acquisition returns, risks, and offer strategy.
 
-## Run from the repository root
+Agent ID: `acquirer-acquisition-analysis`
 
-Preview the complete task without credentials or a research request:
+## Run
+
+From the repository root:
+
+```powershell
+python -m agents.acquirer.runtime.main
+```
+
+Or pass task settings:
+
+```powershell
+python -m agents.acquirer.runtime.main --settings path/to/settings.json
+```
+
+For a preview without an API request:
 
 ```powershell
 python -m agents.acquirer.runtime.main --settings agents/acquirer/examples/hypothetical.json --dry-run
 ```
 
-For real research, install the root requirements, configure credentials, and provide your own task settings:
-
-```powershell
-python -m agents.acquirer.runtime.main --settings path/to/your-settings.json
-```
-
-Omit `--settings` to answer the input questions interactively. See the [repository instructions](../../README.md) for service configuration and exports.
-
 ## Files
 
-- `question_list.md`: nine questions corresponding to this agent's workflow diagram.
-- `default_settings.md`: inputs, defaults, and missing-information behavior.
-- `manifest.json`: independent agent ID and platform input schema.
-- `prompt.md`: role, client mandate, research planning, nine stages, and reporting standards.
-- `output_spec.md`: independent report structure.
-- `runtime/`: this agent's entry point and adapters to shared infrastructure.
-- `examples/hypothetical.json`: input-only preview example; not a real transaction or completed research.
+- `question_list.md`: nine pre-research questions.
+- `default_settings.md`: input definitions and defaults.
+- `manifest.json`: agent metadata and input schema.
+- `prompt.md`: research role, planning, nine stages, and reporting standards.
+- `output_spec.md`: report structure.
+- `runtime/`: execution entry points and configuration.
+- `examples/hypothetical.json`: configuration example for preview.
 
-## Outputs and limits
-
-Each run saves to `output/acquirer-acquisition-analysis/run_<unique-id>/`. Real completed runs save `report.md`, `evidence.json`, `settings.json`, and `run.json`. DOCX export is optional and PDF additionally requires Word and docx2pdf. Export failures produce warnings while core outputs remain available.
-
-No live research quality, complete nine-stage execution, XBRL verification, independent certification, or ATL integration is claimed. The runtime invokes one research request using this agent's approved workflow; it does not implement a separate nine-node graph. Listed documents are not automatically uploaded or read.
+Outputs are saved under `output/acquirer-acquisition-analysis/<run-id>/`. See the [root README](../../README.md) for installation, service configuration, exports, and validation status.
