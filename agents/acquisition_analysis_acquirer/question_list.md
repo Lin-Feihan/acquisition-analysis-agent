@@ -1,4 +1,4 @@
-# Acquirer-Side Acquisition Analysis Agent — Question List
+# Acquisition Analysis (Acquirer Side) — Question List
 
 These questions collect the acquirer's mandate and available information before research. Users may answer "Not specified," "Unknown," or "Not available." Missing answers must not be converted into invented facts, preferences, or requirements.
 

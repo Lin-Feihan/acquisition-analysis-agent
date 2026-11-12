@@ -1,27 +1,27 @@
-# Target-Side Acquisition Offer Analysis Agent
+# Acquisition Analysis (Target Company Side)
 
 Supports the target company's board in assessing an offer against standalone value and alternatives, including payment quality, shareholder proceeds, liquidity, and deal certainty.
 
-Agent ID: `target-acquisition-analysis`
+Agent ID: `acquisition-analysis-target-company`
 
 ## Run
 
 From the repository root:
 
 ```powershell
-python -m agents.target.runtime.main
+python -m agents.acquisition_analysis_target_company.runtime.main
 ```
 
 Or pass task settings:
 
 ```powershell
-python -m agents.target.runtime.main --settings path/to/settings.json
+python -m agents.acquisition_analysis_target_company.runtime.main --settings path/to/settings.json
 ```
 
 For a preview without an API request:
 
 ```powershell
-python -m agents.target.runtime.main --settings agents/target/examples/hypothetical.json --dry-run
+python -m agents.acquisition_analysis_target_company.runtime.main --settings agents/acquisition_analysis_target_company/examples/hypothetical.json --dry-run
 ```
 
 ## Files
@@ -34,4 +34,4 @@ python -m agents.target.runtime.main --settings agents/target/examples/hypotheti
 - `runtime/`: execution entry points and configuration.
 - `examples/hypothetical.json`: configuration example for preview.
 
-Outputs are saved under `output/target-acquisition-analysis/<run-id>/`. See the [root README](../../README.md) for installation, service configuration, exports, and validation status.
+Outputs are saved under `output/acquisition-analysis-target-company/<run-id>/`. See the [root README](../../README.md) for installation, service configuration, exports, and validation status.

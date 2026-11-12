@@ -1,4 +1,4 @@
-# Target-Side Acquisition Offer Analysis Agent — Question List
+# Acquisition Analysis (Target Company Side) — Question List
 
 These questions collect the target company's decision context and available information before research. Users may answer "Not specified," "Unknown," or "Not available." Missing answers must not be converted into invented facts, preferences, or requirements.
 

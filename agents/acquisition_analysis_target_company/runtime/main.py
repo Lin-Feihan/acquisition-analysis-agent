@@ -1,4 +1,4 @@
-"""Run with: python -m agents.target.runtime.main"""
+"""Run with: python -m agents.acquisition_analysis_target_company.runtime.main"""
 from pathlib import Path
 from acquisition_runtime.cli import main as run_cli
 

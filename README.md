@@ -6,8 +6,8 @@ Deep research agents that help M&A analysts gather company information, conduct 
 
 | Agent | Agent ID | Directory |
 |---|---|---|
-| Acquirer-Side Acquisition Analysis Agent | `acquirer-acquisition-analysis` | [agents/acquirer](agents/acquirer/README.md) |
-| Target-Side Acquisition Offer Analysis Agent | `target-acquisition-analysis` | [agents/target](agents/target/README.md) |
+| Acquisition Analysis (Acquirer Side) | `acquisition-analysis-acquirer` | [agents/acquisition_analysis_acquirer](agents/acquisition_analysis_acquirer/README.md) |
+| Acquisition Analysis (Target Company Side) | `acquisition-analysis-target-company` | [agents/acquisition_analysis_target_company](agents/acquisition_analysis_target_company/README.md) |
 
 Each agent has its own inputs, question list, prompt, report specification, and entry point. Common runtime code is in `acquisition_runtime/`.
 
@@ -42,22 +42,22 @@ Each agent's `runtime/config.yaml` contains JSON-compatible YAML. Preserve that 
 ## Run
 
 ```powershell
-python -m agents.acquirer.runtime.main
-python -m agents.target.runtime.main
+python -m agents.acquisition_analysis_acquirer.runtime.main
+python -m agents.acquisition_analysis_target_company.runtime.main
 ```
 
 Each command collects the corresponding agent's inputs. To read settings from a JSON file:
 
 ```powershell
-python -m agents.acquirer.runtime.main --settings path/to/acquirer-settings.json
-python -m agents.target.runtime.main --settings path/to/target-settings.json
+python -m agents.acquisition_analysis_acquirer.runtime.main --settings path/to/acquirer-settings.json
+python -m agents.acquisition_analysis_target_company.runtime.main --settings path/to/target-settings.json
 ```
 
 Use `--dry-run` to validate inputs and save the assembled prompt without an API request. Configuration examples:
 
 ```powershell
-python -m agents.acquirer.runtime.main --settings agents/acquirer/examples/hypothetical.json --dry-run
-python -m agents.target.runtime.main --settings agents/target/examples/hypothetical.json --dry-run
+python -m agents.acquisition_analysis_acquirer.runtime.main --settings agents/acquisition_analysis_acquirer/examples/hypothetical.json --dry-run
+python -m agents.acquisition_analysis_target_company.runtime.main --settings agents/acquisition_analysis_target_company/examples/hypothetical.json --dry-run
 ```
 
 Other options: `--output` selects an output root, `--no-docx` skips DOCX, and `--pdf` attempts PDF export.

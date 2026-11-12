@@ -1,6 +1,6 @@
 {
-  "agent_id": "acquirer-acquisition-analysis",
-  "name": "Acquirer-Side Acquisition Analysis Agent",
+  "agent_id": "acquisition-analysis-acquirer",
+  "name": "Acquisition Analysis (Acquirer Side)",
   "description": "Independent acquisition analysis supporting the acquirer's management and board: standalone valuation, synergies, structure, financing, returns, risks, and offer strategy.",
   "category": "M&A Research",
   "provider_note": "OpenAI Responses or an OpenAI-compatible synchronous CommonStack gateway; configured server-side. Live research and ATL registration are not yet verified.",

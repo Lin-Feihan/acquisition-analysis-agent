@@ -1,6 +1,6 @@
-# Target-Side Acquisition Offer Analysis Agent
+# Acquisition Analysis (Target Company Side)
 
-- Agent ID: `target-acquisition-analysis`
+- Agent ID: `acquisition-analysis-target-company`
 - Client: Target company's board.
 - Task: Assess an acquisition offer against standalone operation and alternatives, including proceeds, liquidity, and certainty.
 - Inputs: Company identifiers, research dates, nine question-list answers, and additional context.

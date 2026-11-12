@@ -1,27 +1,27 @@
-# Acquirer-Side Acquisition Analysis Agent
+# Acquisition Analysis (Acquirer Side)
 
 Supports the acquirer's management and board in assessing standalone value, synergies, financing, acquisition returns, risks, and offer strategy.
 
-Agent ID: `acquirer-acquisition-analysis`
+Agent ID: `acquisition-analysis-acquirer`
 
 ## Run
 
 From the repository root:
 
 ```powershell
-python -m agents.acquirer.runtime.main
+python -m agents.acquisition_analysis_acquirer.runtime.main
 ```
 
 Or pass task settings:
 
 ```powershell
-python -m agents.acquirer.runtime.main --settings path/to/settings.json
+python -m agents.acquisition_analysis_acquirer.runtime.main --settings path/to/settings.json
 ```
 
 For a preview without an API request:
 
 ```powershell
-python -m agents.acquirer.runtime.main --settings agents/acquirer/examples/hypothetical.json --dry-run
+python -m agents.acquisition_analysis_acquirer.runtime.main --settings agents/acquisition_analysis_acquirer/examples/hypothetical.json --dry-run
 ```
 
 ## Files
@@ -34,4 +34,4 @@ python -m agents.acquirer.runtime.main --settings agents/acquirer/examples/hypot
 - `runtime/`: execution entry points and configuration.
 - `examples/hypothetical.json`: configuration example for preview.
 
-Outputs are saved under `output/acquirer-acquisition-analysis/<run-id>/`. See the [root README](../../README.md) for installation, service configuration, exports, and validation status.
+Outputs are saved under `output/acquisition-analysis-acquirer/<run-id>/`. See the [root README](../../README.md) for installation, service configuration, exports, and validation status.

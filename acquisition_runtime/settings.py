@@ -5,19 +5,25 @@ from datetime import date
 from pathlib import Path
 
 
+class SettingsValidationError(ValueError):
+    def __init__(self, errors):
+        self.errors = errors
+        super().__init__("Invalid task settings: " + "; ".join(f"{key}: {value}" for key, value in errors.items()))
+
+
 def load_manifest(agent_root):
     return json.loads((Path(agent_root) / "manifest.json").read_text(encoding="utf-8"))
 
 
 def validate_settings(agent_root, submitted):
     if not isinstance(submitted, dict):
-        raise ValueError("Task settings must be a JSON object.")
+        raise SettingsValidationError({"settings": "must be a JSON object"})
     fields = load_manifest(agent_root)["settings_schema"]["fields"]
     allowed = {field["id"] for field in fields}
     unknown = sorted(set(submitted) - allowed)
     if unknown:
-        raise ValueError("Unknown task fields: " + ", ".join(unknown))
-    result, errors = {}, []
+        raise SettingsValidationError({key: "unknown field" for key in unknown})
+    result, errors = {}, {}
     for field in fields:
         key = field["id"]
         value = submitted.get(key)
@@ -25,11 +31,11 @@ def validate_settings(agent_root, submitted):
             value = field.get("default")
         if value is None:
             if field.get("required"):
-                errors.append(key + ": required")
+                errors[key] = "required"
             result[key] = None
             continue
         if not isinstance(value, str):
-            errors.append(key + ": must be text")
+            errors[key] = "must be text"
             continue
         value = value.strip()
         if field["type"] == "date":
@@ -38,10 +44,10 @@ def validate_settings(agent_root, submitted):
                     raise ValueError()
                 date.fromisoformat(value)
             except ValueError:
-                errors.append(key + ": use a valid YYYY-MM-DD date")
+                errors[key] = "use a valid YYYY-MM-DD date"
         result[key] = value
     if errors:
-        raise ValueError("Invalid task settings: " + "; ".join(errors))
+        raise SettingsValidationError(errors)
     result["valuation_date"] = result.get("valuation_date") or result["research_cutoff_date"]
     return result
 

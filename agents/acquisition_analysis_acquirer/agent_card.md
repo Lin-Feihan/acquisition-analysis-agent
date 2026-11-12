@@ -1,6 +1,6 @@
-# Acquirer-Side Acquisition Analysis Agent
+# Acquisition Analysis (Acquirer Side)
 
-- Agent ID: `acquirer-acquisition-analysis`
+- Agent ID: `acquisition-analysis-acquirer`
 - Client: Acquirer's management and board.
 - Task: Assess value creation, price, terms, financing, returns, and execution conditions.
 - Inputs: Company identifiers, research dates, nine question-list answers, and additional context.

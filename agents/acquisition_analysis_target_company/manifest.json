@@ -1,6 +1,6 @@
 {
-  "agent_id": "target-acquisition-analysis",
-  "name": "Target-Side Acquisition Offer Analysis Agent",
+  "agent_id": "acquisition-analysis-target-company",
+  "name": "Acquisition Analysis (Target Company Side)",
   "description": "Independent acquisition-offer analysis supporting the target company's board: standalone value, consideration quality, shareholder interests, alternatives, certainty, and negotiation.",
   "category": "M&A Research",
   "provider_note": "OpenAI Responses or an OpenAI-compatible synchronous CommonStack gateway; configured server-side. Live research and ATL registration are not yet verified.",

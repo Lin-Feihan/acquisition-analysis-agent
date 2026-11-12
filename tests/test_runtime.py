@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def settings(role):
-    return {"target_company": "Target B", "acquirer_company" if role == "acquirer" else "buyer_company": "Buyer A",
+    return {"target_company": "Target B", "acquirer_company" if role == "acquisition_analysis_acquirer" else "buyer_company": "Buyer A",
             "research_cutoff_date": "2026-11-08"}
 
 
@@ -40,7 +40,7 @@ class FakeProvider:
 
 class RuntimeTests(unittest.TestCase):
     def test_questions_injected_and_agents_independent(self):
-        for role in ("acquirer", "target"):
+        for role in ("acquisition_analysis_acquirer", "acquisition_analysis_target_company"):
             root = ROOT / "agents" / role
             manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
             task = settings(role)
@@ -53,7 +53,7 @@ class RuntimeTests(unittest.TestCase):
                 self.assertIn("ANSWER_" + str(index), prompt)
             self.assertNotIn("{{output_specification}}", prompt)
             self.assertIn("1. Executive Summary", prompt)
-            if role == "acquirer":
+            if role == "acquisition_analysis_acquirer":
                 self.assertIn("Stage 6 — Acquisition Returns", prompt)
                 self.assertNotIn("Stage 6 — Strategic Alternatives", prompt)
             else:
@@ -61,22 +61,22 @@ class RuntimeTests(unittest.TestCase):
                 self.assertNotIn("Stage 6 — Acquisition Returns", prompt)
 
     def test_defaults_and_explicit_unknown(self):
-        root = ROOT / "agents/acquirer"
-        result = validate_settings(root, {**settings("acquirer"), "integration_priorities": "Unknown"})
+        root = ROOT / "agents/acquisition_analysis_acquirer"
+        result = validate_settings(root, {**settings("acquisition_analysis_acquirer"), "integration_priorities": "Unknown"})
         self.assertEqual(result["valuation_date"], "2026-11-08")
         self.assertEqual(result["integration_priorities"], "Unknown")
         self.assertEqual(result["funding_and_return_requirements"], "Not specified")
 
     def test_invalid_input(self):
-        root = ROOT / "agents/acquirer"
+        root = ROOT / "agents/acquisition_analysis_acquirer"
         for change in ({"target_company": " "}, {"research_cutoff_date": "2026-02-30"},
                        {"research_cutoff_date": "20261108"}, {"proposed_price_and_terms": 10},
-                       {"perspective": "target"}):
+                       {"perspective": "acquisition_analysis_target_company"}):
             with self.subTest(change=change), self.assertRaises(ValueError):
-                validate_settings(root, {**settings("acquirer"), **change})
+                validate_settings(root, {**settings("acquisition_analysis_acquirer"), **change})
 
     def test_user_braces_are_not_reexpanded(self):
-        prompt = build_prompt(ROOT / "agents/acquirer", {**settings("acquirer"),
+        prompt = build_prompt(ROOT / "agents/acquisition_analysis_acquirer", {**settings("acquisition_analysis_acquirer"),
                                "additional_context": "A supplied formula: {{target_company}}"})
         self.assertIn("A supplied formula: {{target_company}}", prompt)
 
@@ -85,16 +85,16 @@ class RuntimeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             for name in ("manifest.json", "prompt.md", "output_spec.md"):
-                shutil.copy(ROOT / "agents/acquirer" / name, root / name)
+                shutil.copy(ROOT / "agents/acquisition_analysis_acquirer" / name, root / name)
             path = root / "prompt.md"
             path.write_text(path.read_text(encoding="utf-8") + "\n{{missing_variable}}", encoding="utf-8")
             with self.assertRaises(ValueError):
-                build_prompt(root, settings("acquirer"))
+                build_prompt(root, settings("acquisition_analysis_acquirer"))
 
     def test_dry_run_has_no_provider_call(self):
         fake = FakeProvider()
         with tempfile.TemporaryDirectory() as temp:
-            out = execute_run(ROOT / "agents/target", settings("target"), fake,
+            out = execute_run(ROOT / "agents/acquisition_analysis_target_company", settings("acquisition_analysis_target_company"), fake,
                               output_directory=temp, dry_run=True)
             self.assertEqual(fake.prompts, [])
             self.assertEqual(out["record"]["status"], "prepared")
@@ -104,7 +104,7 @@ class RuntimeTests(unittest.TestCase):
     def test_complete_run_outputs_and_isolation(self):
         with tempfile.TemporaryDirectory() as temp:
             outputs = []
-            for role in ("acquirer", "target", "acquirer"):
+            for role in ("acquisition_analysis_acquirer", "acquisition_analysis_target_company", "acquisition_analysis_acquirer"):
                 out = execute_run(ROOT / "agents" / role, settings(role), FakeProvider(),
                                   output_directory=temp, save_docx=False)
                 directory = Path(out["directory"])
@@ -119,7 +119,7 @@ class RuntimeTests(unittest.TestCase):
     def test_research_failure_is_recorded_and_redacted(self):
         with tempfile.TemporaryDirectory() as temp, patch.dict(os.environ, {"OPENAI_API_KEY": "private-test-key"}):
             with self.assertRaises(RuntimeError):
-                execute_run(ROOT / "agents/acquirer", settings("acquirer"),
+                execute_run(ROOT / "agents/acquisition_analysis_acquirer", settings("acquisition_analysis_acquirer"),
                             FakeProvider(RuntimeError("private-test-key")), output_directory=temp)
             record = json.loads(next(Path(temp).rglob("run.json")).read_text())
             self.assertEqual(record["status"], "failed")
@@ -134,7 +134,7 @@ class RuntimeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             with patch("acquisition_runtime.output_handler.write_json", side_effect=fail_evidence):
                 with self.assertRaises(OSError):
-                    execute_run(ROOT / "agents/acquirer", settings("acquirer"), FakeProvider(),
+                    execute_run(ROOT / "agents/acquisition_analysis_acquirer", settings("acquisition_analysis_acquirer"), FakeProvider(),
                                 output_directory=temp, save_docx=False)
             record = json.loads(next(Path(temp).rglob("run.json")).read_text())
             self.assertEqual(record["status"], "failed")
@@ -154,7 +154,7 @@ class RuntimeTests(unittest.TestCase):
 
     def test_cli_preview_for_both_agents(self):
         with tempfile.TemporaryDirectory() as temp:
-            for role in ("acquirer", "target"):
+            for role in ("acquisition_analysis_acquirer", "acquisition_analysis_target_company"):
                 done = subprocess.run([sys.executable, "-m", f"agents.{role}.runtime.main", "--dry-run",
                         "--settings", f"agents/{role}/examples/hypothetical.json", "--output", temp],
                         cwd=ROOT, capture_output=True, text=True)
