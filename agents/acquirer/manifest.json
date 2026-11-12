@@ -1,0 +1,152 @@
+{
+  "agent_id": "acquirer-acquisition-analysis",
+  "name": "Acquirer-Side Acquisition Analysis Agent",
+  "description": "Independent acquisition analysis supporting the acquirer's management and board: standalone valuation, synergies, structure, financing, returns, risks, and offer strategy.",
+  "category": "M&A Research",
+  "provider_note": "Content specification only. Runtime and ATL integration are not yet implemented.",
+  "output_formats": [
+    "markdown",
+    "evidence_json"
+  ],
+  "settings_schema": {
+    "fields": [
+      {
+        "id": "acquirer_company",
+        "label": "Acquirer Company",
+        "type": "text",
+        "required": true,
+        "default": null,
+        "description": "Include identifiers sufficient to distinguish the entity."
+      },
+      {
+        "id": "target_company",
+        "label": "Target Company",
+        "type": "text",
+        "required": true,
+        "default": null,
+        "description": "Include identifiers sufficient to distinguish the entity."
+      },
+      {
+        "id": "research_cutoff_date",
+        "label": "Research Cut-off Date",
+        "type": "date",
+        "required": true,
+        "default": null,
+        "description": "Latest date up to which information may be considered."
+      },
+      {
+        "id": "valuation_date",
+        "label": "Valuation Date",
+        "type": "date",
+        "required": false,
+        "default": null,
+        "description": "If omitted, the future runtime must use the research cut-off date. Disclose justified exceptions."
+      },
+      {
+        "id": "report_language",
+        "label": "Report Language",
+        "type": "text",
+        "required": false,
+        "default": "English",
+        "description": "Language for the final report."
+      },
+      {
+        "id": "report_currency",
+        "label": "Report Currency",
+        "type": "text",
+        "required": false,
+        "default": "USD",
+        "description": "Preserve source currencies and disclose conversions."
+      },
+      {
+        "id": "deal_background",
+        "label": "What is the deal background?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Describe the opportunity, transaction history, current status, and decision to be supported.",
+        "placeholder": "Describe the opportunity, transaction history, current status, and decision to be supported."
+      },
+      {
+        "id": "acquisition_objectives",
+        "label": "What are BuyCo's objectives?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Describe the strategic, operating, or financial objectives and why acquisition is being considered.",
+        "placeholder": "Describe the strategic, operating, or financial objectives and why acquisition is being considered."
+      },
+      {
+        "id": "proposed_price_and_terms",
+        "label": "Are any price or terms proposed?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Provide any proposed consideration, value definition, payment mechanics, perimeter, and material terms. State if no offer exists.",
+        "placeholder": "Provide any proposed consideration, value definition, payment mechanics, perimeter, and material terms. State if no offer exists."
+      },
+      {
+        "id": "funding_and_return_requirements",
+        "label": "What are the funding and return requirements?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Provide any financing constraints, liquidity needs, capital-allocation priorities, or defined return requirements.",
+        "placeholder": "Provide any financing constraints, liquidity needs, capital-allocation priorities, or defined return requirements."
+      },
+      {
+        "id": "available_financials_and_forecasts",
+        "label": "What financials and forecasts are available?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Identify available statements, forecasts, assumptions, periods, and their sources. Distinguish management forecasts from analyst scenarios.",
+        "placeholder": "Identify available statements, forecasts, assumptions, periods, and their sources. Distinguish management forecasts from analyst scenarios."
+      },
+      {
+        "id": "integration_priorities",
+        "label": "What are the integration priorities?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Describe integration objectives, priorities, constraints, retention concerns, and known dependencies.",
+        "placeholder": "Describe integration objectives, priorities, constraints, retention concerns, and known dependencies."
+      },
+      {
+        "id": "approvals_and_deadlines",
+        "label": "What approvals and deadlines apply?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Identify known approvals, decision dates, contractual deadlines, and timing constraints.",
+        "placeholder": "Identify known approvals, decision dates, contractual deadlines, and timing constraints."
+      },
+      {
+        "id": "negotiation_priorities",
+        "label": "What are the negotiation priorities?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Identify price, payment, protections, control, timing, or other priorities and any explicit limits.",
+        "placeholder": "Identify price, payment, protections, control, timing, or other priorities and any explicit limits."
+      },
+      {
+        "id": "available_documents_and_scope",
+        "label": "What documents are available, and what's in scope?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "List available documents and locations, access restrictions, included work, and exclusions. Listing a document does not establish that the runtime can access it.",
+        "placeholder": "List available documents and locations, access restrictions, included work, and exclusions. Listing a document does not establish that the runtime can access it."
+      },
+      {
+        "id": "additional_context",
+        "label": "Additional Context",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Supplementary context and concerns."
+      }
+    ]
+  }
+}

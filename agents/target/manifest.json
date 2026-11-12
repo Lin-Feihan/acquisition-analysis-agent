@@ -1,0 +1,152 @@
+{
+  "agent_id": "target-acquisition-analysis",
+  "name": "Target-Side Acquisition Offer Analysis Agent",
+  "description": "Independent acquisition-offer analysis supporting the target company's board: standalone value, consideration quality, shareholder interests, alternatives, certainty, and negotiation.",
+  "category": "M&A Research",
+  "provider_note": "Content specification only. Runtime and ATL integration are not yet implemented.",
+  "output_formats": [
+    "markdown",
+    "evidence_json"
+  ],
+  "settings_schema": {
+    "fields": [
+      {
+        "id": "target_company",
+        "label": "Target Company",
+        "type": "text",
+        "required": true,
+        "default": null,
+        "description": "Include identifiers sufficient to distinguish the entity."
+      },
+      {
+        "id": "buyer_company",
+        "label": "Buyer Company",
+        "type": "text",
+        "required": true,
+        "default": null,
+        "description": "Required for a named-buyer offer assessment; disclose if identity is confidential or unverified."
+      },
+      {
+        "id": "research_cutoff_date",
+        "label": "Research Cut-off Date",
+        "type": "date",
+        "required": true,
+        "default": null,
+        "description": "Latest date up to which information may be considered."
+      },
+      {
+        "id": "valuation_date",
+        "label": "Valuation Date",
+        "type": "date",
+        "required": false,
+        "default": null,
+        "description": "If omitted, the future runtime must use the research cut-off date. Disclose justified exceptions."
+      },
+      {
+        "id": "report_language",
+        "label": "Report Language",
+        "type": "text",
+        "required": false,
+        "default": "English",
+        "description": "Language for the final report."
+      },
+      {
+        "id": "report_currency",
+        "label": "Report Currency",
+        "type": "text",
+        "required": false,
+        "default": "USD",
+        "description": "Preserve source currencies and disclose conversions."
+      },
+      {
+        "id": "deal_background",
+        "label": "What is the deal background?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Describe the approach, transaction history, current status, and decision to be supported.",
+        "placeholder": "Describe the approach, transaction history, current status, and decision to be supported."
+      },
+      {
+        "id": "offer_terms",
+        "label": "What are the offer terms?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Provide consideration, value definition, payment mechanics, perimeter, conditions, and any amendments.",
+        "placeholder": "Provide consideration, value definition, payment mechanics, perimeter, conditions, and any amendments."
+      },
+      {
+        "id": "shareholder_priorities",
+        "label": "What are shareholders' priorities?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Identify evidenced priorities concerning value, liquidity, timing, control, risk, and retained upside. Distinguish differences among holders.",
+        "placeholder": "Identify evidenced priorities concerning value, liquidity, timing, control, risk, and retained upside. Distinguish differences among holders."
+      },
+      {
+        "id": "available_financials_and_forecasts",
+        "label": "What financials and forecasts are available?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Identify statements, forecasts, assumptions, periods, and their sources. Distinguish management forecasts from analyst scenarios.",
+        "placeholder": "Identify statements, forecasts, assumptions, periods, and their sources. Distinguish management forecasts from analyst scenarios."
+      },
+      {
+        "id": "other_offers_and_discussions",
+        "label": "Are there other offers or ongoing discussions?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Identify actual offers or discussions and their status. Separate these from hypothetical alternatives.",
+        "placeholder": "Identify actual offers or discussions and their status. Separate these from hypothetical alternatives."
+      },
+      {
+        "id": "shareholders_and_decision_makers",
+        "label": "Who are the key shareholders and decision-makers?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Identify relevant holders, security classes, voting or approval rights, decision-makers, and known conflicts.",
+        "placeholder": "Identify relevant holders, security classes, voting or approval rights, decision-makers, and known conflicts."
+      },
+      {
+        "id": "approvals_and_deadlines",
+        "label": "What approvals and deadlines apply?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Identify known approvals, response dates, contractual deadlines, and timing constraints.",
+        "placeholder": "Identify known approvals, response dates, contractual deadlines, and timing constraints."
+      },
+      {
+        "id": "negotiation_priorities",
+        "label": "What are the negotiation priorities?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Identify price, payment, liquidity, certainty, protections, or other priorities and explicit limits.",
+        "placeholder": "Identify price, payment, liquidity, certainty, protections, or other priorities and explicit limits."
+      },
+      {
+        "id": "available_documents_and_scope",
+        "label": "What documents are available, and what's in scope?",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "List available documents and locations, access restrictions, included work, and exclusions. Listing a document does not establish runtime access.",
+        "placeholder": "List available documents and locations, access restrictions, included work, and exclusions. Listing a document does not establish runtime access."
+      },
+      {
+        "id": "additional_context",
+        "label": "Additional Context",
+        "type": "longtext",
+        "required": false,
+        "default": "Not specified",
+        "description": "Supplementary context and concerns."
+      }
+    ]
+  }
+}
