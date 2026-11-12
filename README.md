@@ -86,3 +86,5 @@ Checks use fake transports, not paid model calls. The DOCX check runs when its o
 ## Next integration step
 
 Register both IDs separately with atl-research-service, map each schema to its own ATL form, and adapt the existing run/result endpoints to these entry points. This repository does not yet change or deploy that service.
+
+For technical handoff, start with [ATL 上架交接说明](docs/ATL-HANDOFF.md). The delivery target is source and integration handoff; no financial case study is required before transfer. Deployment connectivity and platform checks remain with the integrating team.
