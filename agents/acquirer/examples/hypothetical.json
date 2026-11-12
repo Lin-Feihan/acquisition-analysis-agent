@@ -1,0 +1,18 @@
+{
+  "acquirer_company": "Example Buyer Company (hypothetical)",
+  "target_company": "Example Target Company (hypothetical)",
+  "research_cutoff_date": "2026-11-12",
+  "valuation_date": "2026-11-12",
+  "report_language": "English",
+  "report_currency": "USD",
+  "deal_background": "Hypothetical dry-run example only. No real transaction is asserted. This example tests configuration, not research quality.",
+  "acquisition_objectives": "Not specified",
+  "proposed_price_and_terms": "Not specified",
+  "funding_and_return_requirements": "Not specified",
+  "available_financials_and_forecasts": "Not specified",
+  "integration_priorities": "Not specified",
+  "approvals_and_deadlines": "Not specified",
+  "negotiation_priorities": "Not specified",
+  "available_documents_and_scope": "Not specified",
+  "additional_context": "Not specified"
+}

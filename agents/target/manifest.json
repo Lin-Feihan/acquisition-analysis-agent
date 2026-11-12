@@ -3,10 +3,12 @@
   "name": "Target-Side Acquisition Offer Analysis Agent",
   "description": "Independent acquisition-offer analysis supporting the target company's board: standalone value, consideration quality, shareholder interests, alternatives, certainty, and negotiation.",
   "category": "M&A Research",
-  "provider_note": "Content specification only. Runtime and ATL integration are not yet implemented.",
+  "provider_note": "OpenAI Responses or an OpenAI-compatible synchronous CommonStack gateway; configured server-side. Live research and ATL registration are not yet verified.",
   "output_formats": [
     "markdown",
-    "evidence_json"
+    "evidence_json",
+    "docx",
+    "pdf"
   ],
   "settings_schema": {
     "fields": [
@@ -40,7 +42,7 @@
         "type": "date",
         "required": false,
         "default": null,
-        "description": "If omitted, the future runtime must use the research cut-off date. Disclose justified exceptions."
+        "description": "If omitted, the runtime uses the research cut-off date. Disclose justified exceptions."
       },
       {
         "id": "report_language",

@@ -1,0 +1,2 @@
+# Required only for real Responses API calls; dry runs/tests use the standard library.
+openai>=1.68,<3

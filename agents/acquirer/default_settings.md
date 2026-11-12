@@ -5,7 +5,7 @@
 | `acquirer_company` | Acquirer Company | text | Yes | — | Include identifiers sufficient to distinguish the entity. |
 | `target_company` | Target Company | text | Yes | — | Include identifiers sufficient to distinguish the entity. |
 | `research_cutoff_date` | Research Cut-off Date | date | Yes | — | Latest date up to which information may be considered. |
-| `valuation_date` | Valuation Date | date | No | Research cut-off date | If omitted, the future runtime must use the research cut-off date. Disclose justified exceptions. |
+| `valuation_date` | Valuation Date | date | No | Research cut-off date | If omitted, the runtime uses the research cut-off date. Disclose justified exceptions. |
 | `report_language` | Report Language | text | No | English | Language for the final report. |
 | `report_currency` | Report Currency | text | No | USD | Preserve source currencies and disclose conversions. |
 | `deal_background` | What is the deal background? | longtext | No | Not specified | Describe the opportunity, transaction history, current status, and decision to be supported. |
@@ -25,4 +25,4 @@
 - Preserve "Unknown" and "Not available" as supplied; do not silently replace them with facts or client preferences.
 - All question-list fields must be inserted into this agent's prompt. A separate question-list document alone does not affect research.
 - Listed documents require actual runtime access; this schema does not implement file upload.
-- The manifest defines the reviewed content interface. Runtime validation and ATL registration remain to be implemented.
+- The runtime validates the reviewed content interface. ATL registration remains pending.
