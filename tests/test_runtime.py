@@ -213,6 +213,27 @@ class ProviderTests(unittest.TestCase):
             provider.run("Task")
         self.assertEqual(cancelled, ["r1"])
 
+    def test_gateway_api_timeout_is_sanitized(self):
+        class APITimeoutError(Exception):
+            pass
+
+        def create(**kwargs):
+            raise APITimeoutError("private provider response")
+
+        client = SimpleNamespace(responses=SimpleNamespace(create=create))
+        sdk = SimpleNamespace(APITimeoutError=APITimeoutError)
+        with patch.dict(sys.modules, {"openai": sdk}), patch.dict(os.environ, {
+            "OPENAI_BASE_URL": "https://example.invalid/v1",
+        }):
+            provider = OpenAIResearchProvider(
+                "test", {"model": "test-model", "timeout_seconds": 1500}, client=client
+            )
+            with self.assertRaises(TimeoutError) as raised:
+                provider.run("Task")
+
+        self.assertEqual(str(raised.exception), "Research did not finish within 1500 seconds.")
+        self.assertTrue(raised.exception.__suppress_context__)
+
     def test_parse_citations_sources_and_tool_evidence(self):
         response = {"status": "completed", "output": [
             {"type": "message", "id": "m", "content": [{"type": "output_text", "text": "Result",

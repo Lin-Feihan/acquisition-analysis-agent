@@ -98,6 +98,13 @@ class OpenAIResearchProvider:
             if self.base_url:
                 kwargs["base_url"] = self.base_url
             self.client = OpenAI(**kwargs)
+        try:
+            from openai import APITimeoutError as api_timeout_error
+        except ModuleNotFoundError as exc:
+            if exc.name != "openai":
+                raise
+            # Injected clients can run without the SDK.
+            api_timeout_error = ()
         tools = [{"type": "web_search" if self.base_url else self.config.get("web_search_tool", "web_search_preview")}]
         # Off by default: enable only when the selected endpoint/model supports it.
         if self.config.get("enable_code_interpreter", False):
@@ -131,6 +138,8 @@ class OpenAIResearchProvider:
             result = parse_response(response, self.provider_name, self.model)
             result.metadata["requested_tools"] = tools
             return result
+        except api_timeout_error:
+            raise TimeoutError(f"Research did not finish within {int(self.timeout)} seconds.") from None
         except (RuntimeError, TimeoutError):
             raise
         except Exception as exc:
