@@ -9,7 +9,7 @@
 | `report_language` | Report Language | text | No | English | Language for the final report. |
 | `report_currency` | Report Currency | text | No | USD | Preserve source currencies and disclose conversions. |
 | `deal_background` | What is the deal background? | longtext | No | Not specified | Describe the opportunity, transaction history, current status, and decision to be supported. |
-| `acquisition_objectives` | What are BuyCo's objectives? | longtext | No | Not specified | Describe the strategic, operating, or financial objectives and why acquisition is being considered. |
+| `acquisition_objectives` | What are the acquirer's objectives? | longtext | No | Not specified | Describe the strategic, operating, or financial objectives and why acquisition is being considered. |
 | `proposed_price_and_terms` | Are any price or terms proposed? | longtext | No | Not specified | Provide any proposed consideration, value definition, payment mechanics, perimeter, and material terms. State if no offer exists. |
 | `funding_and_return_requirements` | What are the funding and return requirements? | longtext | No | Not specified | Provide any financing constraints, liquidity needs, capital-allocation priorities, or defined return requirements. |
 | `available_financials_and_forecasts` | What financials and forecasts are available? | longtext | No | Not specified | Identify available statements, forecasts, assumptions, periods, and their sources. Distinguish management forecasts from analyst scenarios. |

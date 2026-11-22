@@ -4,13 +4,13 @@
       "model": "o4-mini-deep-research",
       "web_search_tool": "web_search_preview",
       "poll_interval_seconds": 10,
-      "timeout_seconds": 1800,
+      "timeout_seconds": 1500,
       "enable_code_interpreter": false
     },
     "commonstack": {
       "model": null,
       "poll_interval_seconds": 10,
-      "timeout_seconds": 1800,
+      "timeout_seconds": 1500,
       "enable_code_interpreter": false
     }
   }

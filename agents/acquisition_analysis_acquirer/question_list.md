@@ -5,7 +5,7 @@ These questions collect the acquirer's mandate and available information before 
 | Question | Field ID | Guidance |
 |---|---|---|
 | What is the deal background? | `deal_background` | Describe the opportunity, transaction history, current status, and decision to be supported. |
-| What are BuyCo's objectives? | `acquisition_objectives` | Describe the strategic, operating, or financial objectives and why acquisition is being considered. |
+| What are the acquirer's objectives? | `acquisition_objectives` | Describe the strategic, operating, or financial objectives and why acquisition is being considered. |
 | Are any price or terms proposed? | `proposed_price_and_terms` | Provide any proposed consideration, value definition, payment mechanics, perimeter, and material terms. State if no offer exists. |
 | What are the funding and return requirements? | `funding_and_return_requirements` | Provide any financing constraints, liquidity needs, capital-allocation priorities, or defined return requirements. |
 | What financials and forecasts are available? | `available_financials_and_forecasts` | Identify available statements, forecasts, assumptions, periods, and their sources. Distinguish management forecasts from analyst scenarios. |

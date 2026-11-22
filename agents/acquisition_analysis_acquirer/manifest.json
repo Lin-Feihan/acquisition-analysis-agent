@@ -71,7 +71,7 @@
       },
       {
         "id": "acquisition_objectives",
-        "label": "What are BuyCo's objectives?",
+        "label": "What are the acquirer's objectives?",
         "type": "longtext",
         "required": false,
         "default": "Not specified",
